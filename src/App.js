@@ -5,6 +5,7 @@ import AdminPage from './pages/Admin';
 import NotFound from './pages/NotFound';
 import Unauthorised from "./pages/Unauthorised";
 import UserPage from './pages/User';
+import CounterPage from "./pages/Counter";
 
 function App() {
   const { auth } = useAuth();
@@ -43,7 +44,7 @@ function App() {
     },
     {
       path: "/home/user/counter",
-      element: <PrivateRoute isAuthenticated={loggedIn}><UserPage showCounter={true} /></PrivateRoute>,
+      element: <PrivateRoute isAuthenticated={loggedIn}><CounterPage /></PrivateRoute>,
     }
   ]);
   return (

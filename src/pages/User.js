@@ -1,17 +1,10 @@
-import CalculateIcon from '@mui/icons-material/Calculate';
-import HomeIcon from '@mui/icons-material/Home';
 import Sidebar from "../components/Navbar";
-import UserCounter from "../components/UserCounter";
+import { userDrawerList } from "../constants/DrawerLists";
 
-const UserPage = ({ showCounter } = false) => {
-    const drawerList = [
-        { text: 'Home', icon: <HomeIcon />, path: '/home' },
-        { text: 'Counter', icon: <CalculateIcon />, path: '/home/user/counter' }
-    ];
+const UserPage = () => {
     return (
         <>
-            <Sidebar drawerList={drawerList} />
-            {showCounter && <UserCounter />}
+            <Sidebar drawerList={userDrawerList} />
         </>
     );
 };
