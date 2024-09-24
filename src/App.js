@@ -2,10 +2,11 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import Login from './components/Login';
 import { useAuth } from './context/AuthContext';
 import AdminPage from './pages/Admin';
+import CounterPage from "./pages/Counter";
 import NotFound from './pages/NotFound';
 import Unauthorised from "./pages/Unauthorised";
 import UserPage from './pages/User';
-import CounterPage from "./pages/Counter";
+import UsersPage from "./pages/Users";
 
 function App() {
   const { auth } = useAuth();
@@ -40,7 +41,7 @@ function App() {
     },
     {
       path: "/home/admin/users",
-      element: <PrivateRoute isAuthenticated={loggedIn}><AdminPage showUsers={true} /></PrivateRoute>,
+      element: <PrivateRoute isAuthenticated={loggedIn}><UsersPage /></PrivateRoute>,
     },
     {
       path: "/home/user/counter",

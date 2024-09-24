@@ -1,3 +1,5 @@
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import AdminEditUser from "./AdminEditUser";
 
@@ -32,20 +34,28 @@ const AdminUsers = () => {
     setEditUser(null);
   };
   return (
-    <>
-      <div>
-        <h2>Users</h2>
-        <ul>
+    editing ? <AdminEditUser user={editUser} _updateUser={updateUser} /> :
+      <Box>
+        <Typography variant="h2">Users</Typography>
+        <Box width={"90%"} display={"flex"} flexDirection={"column"}>
+          <Box display={"flex"} justifyContent={"space-between"} p={2} bgcolor={"#3498db"}>
+            <Typography flex={3} variant="div">Name</Typography>
+            <Typography flex={4} variant="div">Email</Typography>
+            <Typography flex={2} variant="div">Domain</Typography>
+            <Typography flex={2} variant="div">Action</Typography>
+          </Box>
           {users.map((user) => (
-            <li key={user.id}>
-              {user.name} - {user.email} - {user.domain}
-              <button onClick={() => handleEditUser(user)}>Edit</button>
-            </li>
+            <Box key={user.id} display={"flex"} justifyContent={"space-between"} p={2}>
+              <Typography flex={3} variant="div">{user.name}</Typography>
+              <Typography flex={4} variant="div">{user.email}</Typography>
+              <Typography flex={2} variant="div">{user.domain}</Typography>
+              <Typography flex={2} variant="div">
+                <Button onClick={() => handleEditUser(user)}><EditIcon /> Edit</Button>
+              </Typography>
+            </Box>
           ))}
-        </ul>
-      </div>
-      {editing && <AdminEditUser user={editUser} _updateUser={updateUser} />}
-    </>
+        </Box>
+      </Box>
   );
 };
 
