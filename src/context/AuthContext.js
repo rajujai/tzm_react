@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 const loadAuthState = () => {
   const storedAuth = localStorage.getItem("auth");
-  return storedAuth ? JSON.parse(storedAuth) : { isLoggedIn: false, role: null, loading: false };
+  return storedAuth ? JSON.parse(storedAuth) : { isLoggedIn: false, role: null, currentUser: null };
 };
 
 export const AuthProvider = ({ children }) => {
@@ -16,9 +16,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = (email, password) => {
     if (email === "admin@reactapp.com" && password === "admin123") {
-      updateAuth({ isLoggedIn: true, role: "admin", loading: false });
+      const admin = { email, domain: "Admin" };
+      updateAuth({ isLoggedIn: true, role: "admin", cuttentUser: admin });
     } else if (email === "user@reactapp.com" && password === "user123") {
-      updateAuth({ isLoggedIn: true, role: "user", loading: false });
+      const users = localStorage.getItem("users");
+      if (users) {
+        const user = JSON.parse(users).find((user) => user.email === email);
+        if (user) {
+          updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
+        }
+      } else {
+        const user = { email, domain: "User" };
+        updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
+      }
     }
   };
 
