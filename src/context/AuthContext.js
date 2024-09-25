@@ -17,18 +17,16 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     if (email === "admin@reactapp.com" && password === "admin123") {
       const admin = { email, domain: "Admin" };
-      updateAuth({ isLoggedIn: true, role: "admin", cuttentUser: admin });
+      updateAuth({ isLoggedIn: true, role: "admin", currentUser: admin });
     } else if (email === "user@reactapp.com" && password === "user123") {
       const users = localStorage.getItem("users");
-      if (users) {
-        const user = JSON.parse(users).find((user) => user.email === email);
-        if (user) {
-          updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
-        }
-      } else {
-        const user = { email, domain: "User" };
-        updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
-      }
+      let user = { email, domain: "User" };
+
+      if (users) user = JSON.parse(users).find((user) => user.email === email);
+
+      if (user) updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
+      else updateAuth({ isLoggedIn: true, role: "user", currentUser: user });
+
     }
   };
 

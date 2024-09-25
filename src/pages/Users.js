@@ -5,12 +5,11 @@ import { adminDrawerList } from "../constants/DrawerLists";
 
 const UsersPage = () => {
     return (
-        <>
-            <Navbar drawerList={adminDrawerList} />
-            <Box width={"90%"} mt={6} p={5}>
+        <Navbar drawerList={adminDrawerList}>
+            <Box p={2}>
                 <AdminUsers />
             </Box>
-        </>
+        </Navbar>
     )
 }
 
