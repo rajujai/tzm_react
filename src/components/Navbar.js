@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Link, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toggleDrawer } from '../redux/drawerSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
@@ -127,10 +127,11 @@ const Navbar = ({ drawerList, children }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              React App
+              <Button onClick={() => <Navigate to="/home" />} color="inherit">React App</Button>
             </Typography>
             <Typography variant="h6" component="div">
-              {auth.isLoggedIn ? <Button onClick={handleLogout} color="inherit">Logout</Button> : <Button onClick={() => <Link to="/login" />} color="inherit">Login</Button>}
+              {auth.isLoggedIn ? <Button onClick={handleLogout} color="inherit">Logout</Button>
+                : <Button onClick={() => <Navigate to="/login" />} color="inherit">Login</Button>}
             </Typography>
           </Toolbar>
         </AppBar>
