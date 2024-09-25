@@ -13,9 +13,10 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { toggleDrawer } from '../redux/drawerSlice';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 
 const drawerWidth = 240;
 
@@ -76,15 +77,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Navbar = ({ drawerList, children }) => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const open = useAppSelector((state) => state.drawer.open);
 
-  const toggleDrawer = (state = null) => () => {
-    setOpen(state ? state : !open);
-  };
   const { auth, logout } = useAuth();
 
   const handleButtonClick = (path) => {
-    toggleDrawer(false);
     navigate(path);
   };
 
@@ -99,7 +97,7 @@ const Navbar = ({ drawerList, children }) => {
       '& MuiBox-root': {
         height: '40px'
       }
-    }} role="presentation" onClick={toggleDrawer(false)}>
+    }} role="presentation">
       <List>
         {drawerList.map(({ text, icon, path }) => (
           <ListItem key={text} disablePadding>
@@ -107,7 +105,7 @@ const Navbar = ({ drawerList, children }) => {
               <ListItemIcon>
                 {icon ? <icon.type {...icon.props} /> : <DataObjectIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} onClick={toggleDrawer(false)} />
+              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -123,7 +121,7 @@ const Navbar = ({ drawerList, children }) => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer(null)}
+              onClick={() => dispatch(toggleDrawer())}
               edge="start"
               sx={{ mr: 2 }}
             >
@@ -138,7 +136,7 @@ const Navbar = ({ drawerList, children }) => {
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer open={open} onClose={toggleDrawer(false)} sx={{
+      <Drawer open={open} sx={{
         width: drawerWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
